@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">تبدیل عدد به حروف</string>
+    <string name="numberـhint">عدد مورد نظر را وارد کنید</string>
+    <string name="convert_button">تبدیل به حروف</string>
+    <string name="copy_button">کپی</string>
+    <string name="copy_Toast">کپی شد.</string>
+    <string name="add_button">اضافه به</string>
+    <string name="bigNumberError">عدد بزرگتر از حد مجاز می باشد.</string>
+
+    //numbers
+    <string name="sad">صد</string>
+    <string name="hezar">هزار</string>
+    <string name="million">میلیون</string>
+    <string name="milliard">میلیارد</string>
+    <string name="billion">بیلیون</string>
+
+</resources>
