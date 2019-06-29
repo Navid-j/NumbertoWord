@@ -38,10 +38,10 @@ public class MainActivity extends AppCompatActivity {
         convertBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (numberEditText.getText().length() > 18){
+                if (numberEditText.getText().toString().replace(",","").length() > 18){
                     wordTextView.setText(R.string.bigNumberError);
                 }else {
-                    String HOROF = NumAdapter.convertNumberToWords(Long.parseLong(numberEditText.getText().toString()));
+                    String HOROF = NumAdapter.convertNumberToWords(Long.parseLong(numberEditText.getText().toString().replace(",","")));
                     wordTextView.setText(HOROF);
                 }
             }

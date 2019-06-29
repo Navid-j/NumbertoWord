@@ -57,19 +57,18 @@ public class NumAdapter {
     };
 
     public static String convertNumberToWords(long number) {
+
         if (number < 0) {
             return "minus " + convertNumberToWords(-number);
         }
-        if (number <= 999999 & number >= 1900000) {
-            return convert99999(number);
-        }
+
         String s = null;
         int t = 0;
         while (number > 0) {
-            if (number % 10000 != 0) {
+            if (number % 1000 != 0) {
                 String s2 = convert9999(number % 1000);
                 if (t > 0) {
-                    s2 = s2 + "" + Unlimited[t] + "و";
+                    s2 = s2 + "" + Unlimited[t]+ " و ";
                 }
                 if (s == null) {
                     s = s2;
@@ -80,20 +79,13 @@ public class NumAdapter {
             number /= 1000;
             t++;
         }
-        return s + "تومان";
-    }
-    // Range 0 to 9999.
-    private static String convert99999(long n) {
-        String s1 = convertNumberToWords(n / 10000);
-        String s2 = convert9999(n % 1000);
-        if (n <= 999) {
-            return s2;
-        } else if (n % 100 == 0) {
-            return s1;
-        } else {
-            return s1 + "و " + s2;
+        if(s.endsWith(" و ")){
+
+            s = s.substring(0,s.length() - 3);
         }
+        return s + "ریال";
     }
+
     // Range 0 to 9999.
     private static String convert9999(long n) {
         String s1 = Yekan[(int) (n / 1000)];
