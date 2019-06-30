@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -49,10 +48,11 @@
             android:textColor="@color/colorDark"
             android:textSize="24sp" />
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_margin="10dp">
+            android:layout_margin="10dp"
+            >
         <Button
             android:id="@+id/copyBtn"
             android:layout_width="wrap_content"
@@ -63,18 +63,43 @@
             android:textColor="@color/colorWhite"
             android:textStyle="bold"
             android:background="@color/colorBtn"
+            android:layout_marginStart="10dp"
+            android:padding="5dp"
+            android:drawableStart="@drawable/ic_copy"
+            android:layout_weight="1"
             />
-        <Button
-            android:id="@+id/addBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:scrollbarStyle="outsideInset"
-            android:text="@string/add_button"
-            android:textSize="20sp"
-            android:textColor="@color/colorWhite"
-            android:textStyle="bold"
-            android:background="@color/colorBtn"
-            />
+            <Button
+                android:id="@+id/shareBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scrollbarStyle="outsideInset"
+                android:text="@string/share_button"
+                android:textSize="20sp"
+                android:textColor="@color/colorWhite"
+                android:textStyle="bold"
+                android:background="@color/colorGreen"
+                android:layout_marginStart="10dp"
+                android:padding="5dp"
+                android:drawableStart="@drawable/ic_share"
+                android:layout_weight="1"
+
+                />
+            <Button
+                android:id="@+id/clearBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scrollbarStyle="outsideInset"
+                android:text="@string/clear_button"
+                android:textSize="20sp"
+                android:textColor="@color/colorWhite"
+                android:textStyle="bold"
+                android:background="@color/colorRed"
+                android:layout_marginStart="10dp"
+                android:padding="5dp"
+                android:drawableStart="@drawable/ic_clear"
+                android:layout_weight="1"
+
+                />
         </LinearLayout>
     </LinearLayout>
 

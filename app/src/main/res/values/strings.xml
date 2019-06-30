@@ -3,9 +3,16 @@
     <string name="numberـhint">عدد مورد نظر را وارد کنید</string>
     <string name="convert_button">تبدیل به حروف</string>
     <string name="copy_button">کپی</string>
+    <string name="share_button">اشتراک</string>
+    <string name="clear_button">حذف</string>
     <string name="copy_Toast">کپی شد.</string>
+    <string name="copy_Error">متنی برای کپی وجود ندارد.</string>
+    <string name="share_Toast">متنی برای به اشتراک گزاری وجود ندارد.</string>
     <string name="add_button">اضافه به</string>
     <string name="bigNumberError">عدد بزرگتر از حد مجاز می باشد.</string>
+    <string name="numberNullError">لطفا عدد مورد نظر را وارد کنید.</string>
+    <string name="setting">تنظیمات</string>
+
 
     //numbers
     <string name="sad">صد</string>

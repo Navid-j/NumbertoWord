@@ -6,4 +6,6 @@
     <color name="colorDark">#15051B</color>
     <color name="colorBtn">#0097A7</color>
     <color name="colorWhite">#FFEBEE</color>
+    <color name="colorRed">#D32F2F</color>
+    <color name="colorGreen">#00BFA5</color>
 </resources>
