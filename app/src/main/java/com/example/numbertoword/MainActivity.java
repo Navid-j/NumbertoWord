@@ -3,8 +3,6 @@ package com.example.numbertoword;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Intent;
-import android.graphics.PorterDuff;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -15,7 +13,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
 import java.text.DecimalFormat;
 
@@ -24,7 +21,16 @@ public class MainActivity extends AppCompatActivity {
     ClipboardManager clipboardManager;
     ClipData clipData;
     EditText numberEditText;
+    public String convertToEnglishDigits(String value)
+    {
+        String newValue = value.replace("١", "1").replace("٢", "2").replace("٣", "3").replace("٤", "4").replace("٥", "5")
+                .replace("٦", "6").replace("٧", "7").replace("٨", "8").replace("٩", "9").replace("٠", "0")
+                .replace("۱", "1").replace("۲", "2").replace("۳", "3").replace("۴", "4").replace("۵", "5")
+                .replace("۶", "6").replace("۷", "7").replace("۸", "8").replace("۹", "9").replace("۰", "0")
+                .replace("٬","");
 
+        return newValue;
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,11 +38,6 @@ public class MainActivity extends AppCompatActivity {
 
         numberEditText = findViewById(R.id.editText);
         numberEditText.addTextChangedListener(new MyNumberWatcher());
-
-//        Toolbar myToolbar = findViewById(R.id.toolbar);
-//        getSupportActionBar();
-//        ActionBar actionBar = getSupportActionBar();
-//
 
         Button convertBtn = findViewById(R.id.convertBtn);
         final TextView wordTextView = findViewById(R.id.wordView);
@@ -49,14 +50,15 @@ public class MainActivity extends AppCompatActivity {
         convertBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (numberEditText.getText().toString().replace(",","").length() > 18){
+                if (numberEditText.getText().toString().replace(",","").replace("٬","").length() > 18){
                     wordTextView.setText(R.string.bigNumberError);
 
                 }else if (numberEditText.getText().toString().isEmpty()){
                     Toast.makeText(MainActivity.this,R.string.numberNullError,Toast.LENGTH_SHORT).show();
 
                 } else {
-                    String HOROF = NumAdapter.convertNumberToWords(Long.parseLong(numberEditText.getText().toString().replace(",","")));
+
+                    String HOROF = NumAdapter.convertNumberToWords(Long.parseLong(numberEditText.getText().toString().replace(",","").replace("٬","")));
                     wordTextView.setText(HOROF);
                 }
             }
@@ -126,13 +128,15 @@ public class MainActivity extends AppCompatActivity {
 
             numberEditText.removeTextChangedListener(this);
 
-            String text = numberEditText.getText().toString();
+            String text = convertToEnglishDigits(numberEditText.getText().toString());
 
-            text = text.replace(",", "");
+            text = text.replace(",", "").replace("٬","");
+
 
             if (text.length() > 0){
                 DecimalFormat sdd = new DecimalFormat("#,###");
-                Double doublenumber = Double.parseDouble(text);
+
+                    Long doublenumber = Long.parseLong(text);
 
                 String format = sdd.format(doublenumber);
                 numberEditText.setText(format);
@@ -141,5 +145,7 @@ public class MainActivity extends AppCompatActivity {
 
             numberEditText.addTextChangedListener(this);
         }
+
+
     }
 }

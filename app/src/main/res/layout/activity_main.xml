@@ -20,9 +20,7 @@
             android:ems="10"
             android:hint="@string/numberـhint"
             android:inputType="numberDecimal"
-            
-
-            />
+            android:maxLength="23"/>
 
         <Button
             android:id="@+id/convertBtn"
