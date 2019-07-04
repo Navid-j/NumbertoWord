@@ -1,8 +1,11 @@
 package com.example.numbertoword;
 
+import android.app.Application;
 import android.content.ClipData;
 import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.Intent;
+import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -11,6 +14,8 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,6 +26,12 @@ public class MainActivity extends AppCompatActivity {
     ClipboardManager clipboardManager;
     ClipData clipData;
     EditText numberEditText;
+    RadioButton RialRadioBtn;
+    RadioButton TomaanRadioBtn;
+    TabLayout tabs;
+    boolean rial;
+    boolean tomaan;
+
     public String convertToEnglishDigits(String value)
     {
         String newValue = value.replace("١", "1").replace("٢", "2").replace("٣", "3").replace("٤", "4").replace("٥", "5")
@@ -38,14 +49,50 @@ public class MainActivity extends AppCompatActivity {
 
         numberEditText = findViewById(R.id.editText);
         numberEditText.addTextChangedListener(new MyNumberWatcher());
+        RialRadioBtn = findViewById(R.id.rialRadioBtn);
+        TomaanRadioBtn = findViewById(R.id.tomaanRadioBtn);
+        tabs = findViewById(R.id.tabss);
 
-        Button convertBtn = findViewById(R.id.convertBtn);
+        final Button convertBtn = findViewById(R.id.convertBtn);
         final TextView wordTextView = findViewById(R.id.wordView);
+        final TextView TomaanTV = findViewById(R.id.tomaantv);
+        final TextView RialTV = findViewById(R.id.rialtv);
         Button copyBtn = findViewById(R.id.copyBtn);
         final Button shareBtn = findViewById(R.id.shareBtn);
         final Button clearBtn = findViewById(R.id.clearBtn);
 
         clipboardManager = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+
+        tabs.addOnTabSelectedListener(new TabLayout.BaseOnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                if (tab.getPosition() == 0){
+                    wordTextView.setVisibility(View.VISIBLE);
+                    RialTV.setVisibility(View.INVISIBLE);
+                    TomaanTV.setVisibility(View.INVISIBLE);
+
+                }else if (tab.getPosition() == 1){
+                    wordTextView.setVisibility(View.INVISIBLE);
+                    RialTV.setVisibility(View.INVISIBLE);
+                    TomaanTV.setVisibility(View.VISIBLE);
+
+                }else if(tab.getPosition() == 2){
+                    wordTextView.setVisibility(View.INVISIBLE);
+                    RialTV.setVisibility(View.VISIBLE);
+                    TomaanTV.setVisibility(View.INVISIBLE);
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
 
         convertBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,8 +104,29 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(MainActivity.this,R.string.numberNullError,Toast.LENGTH_SHORT).show();
 
                 } else {
+                    if (RialRadioBtn.isChecked()){
+                        rial = true;
+                        tomaan = false;
+                        TomaanTV.setVisibility(View.INVISIBLE);
+                        RialTV.setVisibility(View.VISIBLE);
+                        String RIAL = NumAdapter.convertNumberToWords(Long.parseLong(numberEditText.getText().toString().replace(",","").replace("٬","")),rial,tomaan);
+                        RialTV.setText(RIAL);
 
-                    String HOROF = NumAdapter.convertNumberToWords(Long.parseLong(numberEditText.getText().toString().replace(",","").replace("٬","")));
+                    }else if (TomaanRadioBtn.isChecked()){
+                        tomaan = true;
+                        rial = false;
+                        RialTV.setVisibility(View.INVISIBLE);
+                        TomaanTV.setVisibility(View.VISIBLE);
+                        String  TOMAAN= NumAdapter.convertNumberToWords(Long.parseLong(numberEditText.getText().toString().replace(",","").replace("٬","")),rial,tomaan);
+                        TomaanTV.setText(TOMAAN);
+                    }else {
+                        rial = false;
+                        tomaan = false;
+                        RialTV.setVisibility(View.INVISIBLE);
+                        TomaanTV.setVisibility(View.INVISIBLE);
+                    }
+
+                    String HOROF = NumAdapter.convertNumberToWords(Long.parseLong(numberEditText.getText().toString().replace(",","").replace("٬","")),rial,tomaan);
                     wordTextView.setText(HOROF);
                 }
             }

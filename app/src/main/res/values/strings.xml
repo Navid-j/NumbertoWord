@@ -12,6 +12,11 @@
     <string name="bigNumberError">عدد بزرگتر از حد مجاز می باشد.</string>
     <string name="numberNullError">لطفا عدد مورد نظر را وارد کنید.</string>
     <string name="setting">تنظیمات</string>
+    <string name="rial">ریال</string>
+    <string name="tomaan">تومان</string>
+    <string name="number">عدد</string>
+    <string name="equivalentRial">معادل به ریال</string>
+    <string name="equivalentTomaan">معادل به تومان</string>
 
 
     //numbers
@@ -20,5 +25,6 @@
     <string name="million">میلیون</string>
     <string name="milliard">میلیارد</string>
     <string name="billion">بیلیون</string>
+    <string name="version">ورژن ۱.۱</string>
 
 </resources>

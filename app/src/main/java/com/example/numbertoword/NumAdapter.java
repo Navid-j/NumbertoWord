@@ -1,5 +1,7 @@
 package com.example.numbertoword;
 
+import android.content.Context;
+
 public class NumAdapter {
 
     private static final String[] Yekan = {
@@ -56,11 +58,9 @@ public class NumAdapter {
             "بیلیارد ", //[5]
     };
 
-    public static String convertNumberToWords(long number) {
+    public static String convertNumberToWords(long number , boolean rial , boolean tomaan) {
 
-        if (number < 0) {
-            return "minus " + convertNumberToWords(-number);
-        }
+        String Unit = "";
 
         String s = null;
         int t = 0;
@@ -83,7 +83,13 @@ public class NumAdapter {
 
             s = s.substring(0,s.length() - 3);
         }
-        return s + "ریال";
+        if (rial){
+            Unit= "ریال";
+        }
+        if (tomaan){
+            Unit= "تومان";
+        }
+        return s + Unit;
     }
 
     // Range 0 to 9999.
