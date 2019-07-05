@@ -12,39 +12,6 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         >
-        <info.hoang8f.android.segmented.SegmentedGroup
-            xmlns:segmentedgroup="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/segmented2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:orientation="horizontal"
-            segmentedgroup:sc_border_width="2dp"
-            segmentedgroup:sc_corner_radius="10dp">
-
-            <RadioButton
-                android:id="@+id/digitRadioBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/number"
-                style="@style/RadioButton" />
-
-            <RadioButton
-                android:id="@+id/tomaanRadioBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/tomaan"
-                style="@style/RadioButton" />
-
-            <RadioButton
-                android:id="@+id/rialRadioBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/rial"
-                style="@style/RadioButton" />
-        </info.hoang8f.android.segmented.SegmentedGroup>
-
-
         <EditText
             android:id="@+id/editText"
             android:layout_width="match_parent"
@@ -76,7 +43,7 @@
                 android:id="@+id/numberTab"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/number" />
+                android:text="@string/character" />
 
             <android.support.design.widget.TabItem
                 android:id="@+id/tomaanTab"
@@ -98,17 +65,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
-        <TextView
-            android:id="@+id/wordView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="20dp"
-            android:textAlignment="center"
-            android:textColor="@color/colorDark"
-            android:textSize="24sp" />
+                <TextView
+                    android:id="@+id/wordView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="20dp"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorDark"
+                    android:textSize="24sp" />
                 <TextView
                     android:id="@+id/tomaantv"
                     android:layout_width="match_parent"
@@ -142,21 +109,21 @@
             android:layout_margin="10dp"
 
             >
-        <Button
-            android:id="@+id/copyBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:scrollbarStyle="outsideInset"
-            android:text="@string/copy_button"
-            android:textSize="20sp"
-            android:textColor="@color/colorWhite"
-            android:textStyle="bold"
-            android:background="@color/colorBtn"
-            android:layout_marginStart="10dp"
-            android:padding="5dp"
-            android:drawableStart="@drawable/ic_copy"
-            android:layout_weight="1"
-            />
+            <Button
+                android:id="@+id/copyBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scrollbarStyle="outsideInset"
+                android:text="@string/copy_button"
+                android:textSize="20sp"
+                android:textColor="@color/colorWhite"
+                android:textStyle="bold"
+                android:background="@color/colorBtn"
+                android:layout_marginStart="10dp"
+                android:padding="5dp"
+                android:drawableStart="@drawable/ic_copy"
+                android:layout_weight="1"
+                />
             <Button
                 android:id="@+id/shareBtn"
                 android:layout_width="wrap_content"

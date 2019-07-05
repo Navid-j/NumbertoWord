@@ -14,10 +14,7 @@
     <string name="setting">تنظیمات</string>
     <string name="rial">ریال</string>
     <string name="tomaan">تومان</string>
-    <string name="number">عدد</string>
-    <string name="equivalentRial">معادل به ریال</string>
-    <string name="equivalentTomaan">معادل به تومان</string>
-
+    <string name="character">حروف</string>
 
     //numbers
     <string name="sad">صد</string>
