@@ -1,9 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SettingActivity">
+    tools:context=".SettingActivity"
+    android:orientation="vertical">
 
-</android.support.constraint.ConstraintLayout>
+    <LinearLayout
+        android:id="@+id/settingLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+        <TextView
+            android:id="@+id/settingHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/setting"
+            android:textColor="@color/colorDark"
+            android:textSize="40sp"
+            android:layout_gravity="center"
+            />
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:background="?android:attr/listDivider" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="20dp"
+            >
+            <TextView
+                android:id="@+id/changefont"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/fontSize"
+                android:textColor="@color/colorDark"
+                android:textSize="25sp"
+                android:layout_gravity="center"/>
+
+            <SeekBar
+                android:id="@+id/seekBarSize"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                />
+            <Button
+                android:id="@+id/saveBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/saveBtn"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:textSize="25sp"/>
+
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+</LinearLayout>

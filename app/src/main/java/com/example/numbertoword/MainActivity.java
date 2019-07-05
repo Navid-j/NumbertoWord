@@ -5,12 +5,14 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -30,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     boolean rial;
     boolean tomaan;
     InputMethodManager imm;
+    int size;
 
     public String convertToEnglishDigits(String value)
     {
@@ -47,6 +50,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        SharedPreferences shp = getSharedPreferences("setting",MODE_PRIVATE);
+        size = shp.getInt("size",22);
 
         numberEditText = findViewById(R.id.editText);
         numberEditText.addTextChangedListener(new MyNumberWatcher());
@@ -54,9 +59,11 @@ public class MainActivity extends AppCompatActivity {
 
         final Button convertBtn = findViewById(R.id.convertBtn);
         wordTextView = findViewById(R.id.wordView);
+        wordTextView.setTextSize(size);
         Button copyBtn = findViewById(R.id.copyBtn);
         final Button shareBtn = findViewById(R.id.shareBtn);
         final Button clearBtn = findViewById(R.id.clearBtn);
+
 
         clipboardManager = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
 
@@ -167,6 +174,22 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.setting:
+                Intent intent = new Intent(MainActivity.this, SettingActivity.class);
+                startActivity(intent);
+                return true;
+            case R.id.infobar:
+                Intent ontent = new Intent(MainActivity.this, SettingActivity.class);
+                startActivity(ontent);
+                return true;
+
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     public class MyNumberWatcher implements TextWatcher{
 
         @Override
@@ -202,6 +225,13 @@ public class MainActivity extends AppCompatActivity {
             numberEditText.addTextChangedListener(this);
         }
 
+    }
 
+    @Override
+    protected void onResumeFragments() {
+        SharedPreferences shp = getSharedPreferences("setting",MODE_PRIVATE);
+        size = shp.getInt("size",16);
+        wordTextView.setTextSize(size);
+        super.onResumeFragments();
     }
 }
