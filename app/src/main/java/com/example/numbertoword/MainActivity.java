@@ -50,12 +50,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        SharedPreferences shp = getSharedPreferences("setting",MODE_PRIVATE);
+        final SharedPreferences shp = getSharedPreferences("setting",MODE_PRIVATE);
         size = shp.getInt("size",22);
 
         numberEditText = findViewById(R.id.editText);
         numberEditText.addTextChangedListener(new MyNumberWatcher());
         tabs = findViewById(R.id.tabss);
+        tabs.getTabAt(shp.getInt("position",0)).select();
 
         final Button convertBtn = findViewById(R.id.convertBtn);
         wordTextView = findViewById(R.id.wordView);
@@ -85,6 +86,9 @@ public class MainActivity extends AppCompatActivity {
                     convertProgress(rial,tomaan);
                     imm.hideSoftInputFromWindow(numberEditText.getWindowToken(),0);
                 }
+                SharedPreferences.Editor shpE = shp.edit();
+                shpE.putInt("position",tabs.getSelectedTabPosition());
+                shpE.apply();
             }
 
             @Override
