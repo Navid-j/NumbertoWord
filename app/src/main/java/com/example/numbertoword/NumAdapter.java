@@ -62,34 +62,38 @@ public class NumAdapter {
 
         String Unit = "";
 
-        String s = null;
-        int t = 0;
-        while (number > 0) {
-            if (number % 1000 != 0) {
-                String s2 = convert9999(number % 1000);
-                if (t > 0) {
-                    s2 = s2 + "" + Unlimited[t]+ " و ";
+        if (number == 0){
+            return "صفر ";
+        }else {
+            String s = null;
+            int t = 0;
+            while (number > 0) {
+                if (number % 1000 != 0) {
+                    String s2 = convert9999(number % 1000);
+                    if (t > 0) {
+                        s2 = s2 + "" + Unlimited[t] + " و ";
+                    }
+                    if (s == null) {
+                        s = s2;
+                    } else {
+                        s = s2 + s;
+                    }
                 }
-                if (s == null) {
-                    s = s2;
-                } else {
-                    s = s2 + s;
-                }
+                number /= 1000;
+                t++;
             }
-            number /= 1000;
-            t++;
-        }
-        if(s.endsWith(" و ")){
+            if (s.endsWith(" و ")) {
 
-            s = s.substring(0,s.length() - 3);
+                s = s.substring(0, s.length() - 3);
+            }
+            if (rial) {
+                Unit = "ریال";
+            }
+            if (tomaan) {
+                Unit = "تومان";
+            }
+            return s + Unit;
         }
-        if (rial){
-            Unit= "ریال";
-        }
-        if (tomaan){
-            Unit= "تومان";
-        }
-        return s + Unit;
     }
 
     // Range 0 to 9999.

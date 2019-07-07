@@ -9,4 +9,5 @@
     <color name="colorRed">#D32F2F</color>
     <color name="colorGreen">#00BFA5</color>
     <color name="colorGray">#C5CAE9</color>
+    <color name="GlassBg">#5BFFFFFF</color>
 </resources>

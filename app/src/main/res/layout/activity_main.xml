@@ -12,15 +12,32 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
         <EditText
             android:id="@+id/editText"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:ems="10"
             android:hint="@string/numberـhint"
             android:inputType="numberDecimal"
-            android:maxLength="23"/>
+            android:maxLength="23"
+            android:layout_weight="4"
+            />
+        <Spinner
+            android:id="@+id/dropDown"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:prompt="@string/formats_prompt"
+            android:entries="@array/formats"
+            android:layout_weight="1"
+            >
+
+        </Spinner>
+        </LinearLayout>
 
         <Button
             android:id="@+id/convertBtn"
@@ -43,7 +60,8 @@
                 android:id="@+id/numberTab"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/character" />
+                android:text="@string/character"
+                />
 
             <android.support.design.widget.TabItem
                 android:id="@+id/tomaanTab"
@@ -58,6 +76,14 @@
                 android:text="@string/rial" />
         </android.support.design.widget.TabLayout>
 
+        <TextView
+            android:id="@+id/numChangedView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:textColor="@color/colorDark"
+            android:background="@color/colorGray"
+            android:textSize="24sp" />
 
             <RelativeLayout
                 android:id="@+id/textlayoutfix"
@@ -84,7 +110,9 @@
                         android:paddingBottom="10dp"
                         />
 
+
                 </ScrollView>
+
             </RelativeLayout>
 
     </LinearLayout>
@@ -153,5 +181,6 @@
                 />
         </LinearLayout>
     </RelativeLayout>
+
 
 </RelativeLayout>

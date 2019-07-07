@@ -17,6 +17,7 @@
         android:textSize="42sp"
         android:textColor="@color/colorPrimaryDark"
         android:fontFamily="sans-serif-condensed-medium"
+        android:background="@color/GlassBg"
         />
     <TextView
         android:layout_width="wrap_content"
@@ -24,11 +25,14 @@
         android:text="@string/version"
         android:textSize="32sp"
         android:textColor="@color/colorPrimaryDark"
-        android:fontFamily="sans-serif-thin"/>
+        android:fontFamily="sans-serif-thin"
+        android:background="@color/GlassBg"
+        />
+
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/github"
+        android:src="@drawable/ic_launcher"
         android:layout_margin="30dp"
         />
     <LinearLayout
@@ -36,25 +40,13 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         >
+
         <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@drawable/github"
-            android:layout_margin="10dp"
-        />
-        <ImageView
+            android:id="@+id/myLinkDinIcon"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:src="@drawable/linkedin"
             android:layout_margin="10dp"
-
-            />
-        <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@drawable/telegram"
-            android:layout_margin="10dp"
-
             />
     </LinearLayout>
 

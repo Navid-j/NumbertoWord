@@ -17,7 +17,7 @@
     <string name="tomaan">تومان</string>
     <string name="character">حروف</string>
 
-    //numbers
+    //Numbers
     <string name="sad">صد</string>
     <string name="hezar">هزار</string>
     <string name="million">میلیون</string>
@@ -26,5 +26,16 @@
     <string name="version">ورژن ۱.۱</string>
     <string name="fontSize">اندازه قلم</string>
     <string name="saveBtn">ذخیره</string>
+
+    //Formats
+    <string name="formats_prompt">واحد</string>
+    <string-array name="formats">
+        <item>عدد</item>
+        <item>تومان</item>
+        <item>ریال</item>
+    </string-array>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

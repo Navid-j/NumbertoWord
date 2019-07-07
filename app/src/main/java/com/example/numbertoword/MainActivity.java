@@ -1,6 +1,5 @@
 package com.example.numbertoword;
 
-import android.app.Application;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -13,10 +12,12 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,10 +30,12 @@ public class MainActivity extends AppCompatActivity {
     EditText numberEditText;
     TabLayout tabs;
     TextView wordTextView;
+    TextView numberChanged;
     boolean rial;
     boolean tomaan;
     InputMethodManager imm;
     int size;
+    Spinner dropDown;
 
     public String convertToEnglishDigits(String value)
     {
@@ -44,6 +47,8 @@ public class MainActivity extends AppCompatActivity {
 
         return newValue;
     }
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,32 +66,24 @@ public class MainActivity extends AppCompatActivity {
         final Button convertBtn = findViewById(R.id.convertBtn);
         wordTextView = findViewById(R.id.wordView);
         wordTextView.setTextSize(size);
+        numberChanged = findViewById(R.id.numChangedView);
+        numberChanged.setVisibility(View.INVISIBLE);
         Button copyBtn = findViewById(R.id.copyBtn);
         final Button shareBtn = findViewById(R.id.shareBtn);
         final Button clearBtn = findViewById(R.id.clearBtn);
-
+        dropDown = findViewById(R.id.dropDown);
+        dropDown.setSelection(shp.getInt("format_Position",0));
 
         clipboardManager = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+        final SharedPreferences.Editor shpE = shp.edit();
+
 
         tabs.addOnTabSelectedListener(new TabLayout.BaseOnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                if (tab.getPosition() == 0){
-                    convertProgress(false,false);
-                    imm.hideSoftInputFromWindow(numberEditText.getWindowToken(),0);
-                }else if (tab.getPosition() == 1){
-                    tomaan = true;
-                    rial = false;
-                    convertProgress(rial,tomaan);
-                    imm.hideSoftInputFromWindow(numberEditText.getWindowToken(),0);
 
-                }else if(tab.getPosition() == 2){
-                    rial = true;
-                    tomaan = false;
-                    convertProgress(rial,tomaan);
-                    imm.hideSoftInputFromWindow(numberEditText.getWindowToken(),0);
-                }
-                SharedPreferences.Editor shpE = shp.edit();
+                convertBtn.callOnClick();
+
                 shpE.putInt("position",tabs.getSelectedTabPosition());
                 shpE.apply();
             }
@@ -107,15 +104,29 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 imm.hideSoftInputFromWindow(numberEditText.getWindowToken(),0);
                 if (tabs.getSelectedTabPosition() == 0){
-                    convertProgress(false,false);
+                    convertProgress(false,false, dropDown.getSelectedItemPosition());
+                    numberChanged.setVisibility(View.INVISIBLE);
                 }else if (tabs.getSelectedTabPosition() == 1){
-                    convertProgress(false,true);
+                    convertProgress(false,true, dropDown.getSelectedItemPosition());
                 }else if (tabs.getSelectedTabPosition() == 2){
-                    convertProgress(true,false);
+                    convertProgress(true,false, dropDown.getSelectedItemPosition());
                 }
             }
 
         });
+
+        View.OnTouchListener dropdownClicked = new View.OnTouchListener() {
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+                    convertBtn.callOnClick();
+                    shpE.putInt("format_Position",dropDown.getSelectedItemPosition());
+                    shpE.apply();
+                }
+                return false;
+            }
+        };
+
+        dropDown.setOnTouchListener(dropdownClicked);
 
         copyBtn.setOnClickListener(new View.OnClickListener(){
 
@@ -153,11 +164,13 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 numberEditText.setText(null);
                 wordTextView.setText(null);
+                numberChanged.setText(null);
+                numberChanged.setVisibility(View.INVISIBLE);
             }
         });
     }
 
-    public void convertProgress(boolean rial,boolean tomaan){
+    public void convertProgress(boolean rial, boolean tomaan, int numFormat){
 
         if (numberEditText.getText().toString().replace(",","").replace("٬","").length() > 18){
             wordTextView.setText(R.string.bigNumberError);
@@ -166,10 +179,96 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(MainActivity.this,R.string.numberNullError,Toast.LENGTH_SHORT).show();
 
         } else {
-            String HOROF = NumAdapter.convertNumberToWords(Long.parseLong(numberEditText.getText().toString().replace(",","").replace("٬","")),rial,tomaan);
-            wordTextView.setText(HOROF);
+            switch (numFormat){
+                case 1:
+                    if (tomaan){
+                        String HOROF = NumAdapter.convertNumberToWords(Long.parseLong(numberEditText.getText().toString().replace(",","").replace("٬","")),rial,tomaan);
+                        wordTextView.setText(HOROF);
+                        numberChanged.setText(numberEditText.getText().toString() + " " + getString(R.string.tomaan));
+                        numberChanged.setVisibility(View.VISIBLE);
+                    }else if (rial){
+                        String checkNumber = numberEditText.getText().toString().replace(",","").replace("٬","")+"0";
+                        if (checkNumber.length()>18){
+                            wordTextView.setText(getString(R.string.bigNumberError));
+                            numberChanged.setText(" ");
+                            numberChanged.setVisibility(View.VISIBLE);
+                        }else {
+                            String HOROF = NumAdapter.convertNumberToWords(Long.parseLong(checkNumber), rial, tomaan);
+                            wordTextView.setText(HOROF);
+                            numberChanged.setText(changedToRial("0"));
+                            numberChanged.setVisibility(View.VISIBLE);
+                        }
+
+                    }else {
+                        String HOROF = NumAdapter.convertNumberToWords(Long.parseLong(numberEditText.getText().toString().replace(",","").replace("٬","")),rial,tomaan);
+                        wordTextView.setText(HOROF);
+                        numberChanged.setVisibility(View.INVISIBLE);
+                    }
+                    break;
+                case 2:
+                    if (tomaan){
+                        String test = numberEditText.getText().toString().replace(",","").replace("٬","");
+                        wordTextView.setText("صفر"+ " " +getString(R.string.tomaan));
+
+                        test = test.substring(0,test.length()-1);
+                        if (test.length()<1) {
+                            wordTextView.setText("صفر" + " " + getString(R.string.tomaan));
+                            numberChanged.setText(changedToTomaan());
+                            numberChanged.setVisibility(View.VISIBLE);
+                        }else {
+                            String HOROF = NumAdapter.convertNumberToWords(Long.parseLong(test), rial, tomaan);
+                            wordTextView.setText(HOROF);
+                            numberChanged.setText(changedToTomaan());
+                            numberChanged.setVisibility(View.VISIBLE);
+                        }
+                    }else if (rial){
+                        String HOROF = NumAdapter.convertNumberToWords(Long.parseLong(numberEditText.getText().toString().replace(",","").replace("٬","")),rial,tomaan);
+                        wordTextView.setText(HOROF);
+                        numberChanged.setText(numberEditText.getText().toString() + " " +getString(R.string.rial));
+                        numberChanged.setVisibility(View.VISIBLE);
+                    }else {
+                        String HOROF = NumAdapter.convertNumberToWords(Long.parseLong(numberEditText.getText().toString().replace(",","").replace("٬","")),rial,tomaan);
+                        wordTextView.setText(HOROF);
+                        numberChanged.setVisibility(View.INVISIBLE);
+                    }
+                    break;
+                default:
+                    String HOROF = NumAdapter.convertNumberToWords(Long.parseLong(numberEditText.getText().toString().replace(",","").replace("٬","")),rial,tomaan);
+                    wordTextView.setText(HOROF);
+                    numberChanged.setVisibility(View.INVISIBLE);
+            }
         }
 
+    }
+
+    //Changed number To Rial DecimalFormat
+    public String changedToRial(String num) {
+
+        String text = numberEditText.getText().toString() + num;
+        text = text.replace(",", "").replace("٬","");
+
+        DecimalFormat sdd = new DecimalFormat("#,###");
+        Long doublenumber = Long.parseLong(text);
+        String format = sdd.format(doublenumber);
+
+        return format + " " +getString(R.string.rial);
+    }
+    //Changed number To Tomaan DecimalFormat
+    public String changedToTomaan() {
+
+        String text = numberEditText.getText().toString();
+
+        if (text.length()<=1){
+            return "0" + " " + getString(R.string.tomaan);
+        }
+        text = text.replace(",", "").replace("٬","");
+        text = text.substring(0,text.length()-1);
+
+        DecimalFormat sdd = new DecimalFormat("#,###");
+        Long doublenumber = Long.parseLong(text);
+        String format = sdd.format(doublenumber);
+
+        return format + " " +getString(R.string.tomaan);
     }
 
     @Override
@@ -186,8 +285,8 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
                 return true;
             case R.id.infobar:
-                Intent ontent = new Intent(MainActivity.this, SettingActivity.class);
-                startActivity(ontent);
+                Intent infoIntent = new Intent(MainActivity.this, AboutActivity.class);
+                startActivity(infoIntent);
                 return true;
 
         }
@@ -219,7 +318,7 @@ public class MainActivity extends AppCompatActivity {
             if (text.length() > 0){
                 DecimalFormat sdd = new DecimalFormat("#,###");
 
-                    Long doublenumber = Long.parseLong(text);
+                Long doublenumber = Long.parseLong(text);
 
                 String format = sdd.format(doublenumber);
                 numberEditText.setText(format);
@@ -236,6 +335,7 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences shp = getSharedPreferences("setting",MODE_PRIVATE);
         size = shp.getInt("size",16);
         wordTextView.setTextSize(size);
+        numberChanged.setTextSize(size);
         super.onResumeFragments();
     }
 }
